@@ -7,6 +7,7 @@ import sys
 import warnings
 from urllib.parse import urlparse
 
+import dagshub
 import mlflow
 import mlflow.sklearn
 import numpy as np
@@ -30,6 +31,8 @@ def eval_metrics(actual, pred):
 if __name__ == "__main__":
     warnings.filterwarnings("ignore")
     np.random.seed(40)
+
+    dagshub.init(repo_owner="atulkhare", repo_name="mlflowexperiments", mlflow=True)
 
     # Read the wine-quality csv file from the URL
     csv_url = "https://raw.githubusercontent.com/mlflow/mlflow/master/tests/datasets/winequality-red.csv"

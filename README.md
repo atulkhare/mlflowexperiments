@@ -19,11 +19,18 @@ Create and activate a virtual environment, then install the dependencies:
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install -r requirements.txt
-python -m pip install scikit-learn
 ```
 
-`scikit-learn` is installed explicitly because the application imports it
-directly.
+Set a DagsHub access token in the current PowerShell session before running the
+app (create one in your DagsHub account settings):
+
+```powershell
+$env:DAGSHUB_USER_TOKEN = "<your-dagshub-token>"
+```
+
+The app initializes MLflow tracking for the `atulkhare/mlflowexperiments`
+DagsHub repository before it starts a run. Keep the token out of source control;
+it is used only for authentication.
 
 ## Run
 
@@ -46,15 +53,8 @@ inferred input/output signature.
 
 ## View tracked runs
 
-Start the MLflow tracking UI in a separate terminal:
-
-```powershell
-mlflow ui
-```
-
-Then open [http://localhost:5000](http://localhost:5000). The UI uses MLflow's
-configured tracking store; for the default local setup, run it from this
-project directory.
+Runs are logged to the DagsHub repository's MLflow UI:
+[https://dagshub.com/atulkhare/mlflowexperiments.mlflow](https://dagshub.com/atulkhare/mlflowexperiments.mlflow).
 
 When the tracking URI uses a file store, the model is logged without registry
 registration. For other tracking URI schemes, the script attempts to register
